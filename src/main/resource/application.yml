@@ -10,7 +10,9 @@ spring:
       ddl-auto: update  
   datasource:
     platform: postgress
-    url: ${URL_HOST}
-    username: ${USER}
-    password: ${PASSWORD}
+    url: jdbc:postgresql://ec2-3-215-83-17.compute-1.amazonaws.com:5432/d5qrff1cej8ba1
+    username: awmdkhrojdtppp
+    password: c253d6221c6fd893a3da1e3a8cc20777cb550a4c47f50b78f032e352ba871027
+
+
   
