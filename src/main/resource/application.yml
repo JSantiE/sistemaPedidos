@@ -3,13 +3,13 @@ server:
     
 spring:
   jpa:
-    platform: postgress
+    database: POSTGRESQL
     generate-ddl: true
     show-sql: false
     hibernate:
       ddl-auto: update  
   datasource:
-    platform: mysql
+    platform: postgress
     url: ${DATABASE_URL}
     username: ${USER}
     password: ${PASSWORD}
