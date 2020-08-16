@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class EstadosEntity {
+public class EstadosEntity  implements Cloneable{
 
     @Id
     @SequenceGenerator(name = "estados_id_generator", sequenceName = "estados_id_seq", allocationSize = 1)
@@ -30,4 +30,12 @@ public class EstadosEntity {
 
     @Column(nullable = false)
     private String nombre;
+    
+    
+    @Override
+    public EstadosEntity clone() throws CloneNotSupportedException {
+    
+    	EstadosEntity nueva= new EstadosEntity (this.estadoId,this.nombre);
+        return nueva;
+    }
 }

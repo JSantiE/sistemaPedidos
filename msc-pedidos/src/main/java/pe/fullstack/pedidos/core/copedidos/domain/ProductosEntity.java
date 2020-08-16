@@ -30,10 +30,8 @@ public class ProductosEntity {
     @GeneratedValue(generator = "productos_id_generator")
     private Long productoId;
 
-    @JoinColumn(name = "categoriaId",  insertable = false,
-    		updatable = false)
+    @JoinColumn(name = "categoriaId", referencedColumnName = "categoriaId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    @ManyToOne()
     private CategoriasEntity categoria;
        
     private Double precio;

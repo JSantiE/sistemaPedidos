@@ -1,6 +1,7 @@
 package pe.fullstack.pedidos.core.copedidos.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ClientesRequest {
 	
-	private Long clienteId;
 
     @NotBlank
     private String nombre;
@@ -41,5 +41,6 @@ public class ClientesRequest {
     private String correo;
     
     @NotBlank
+    @Size(max = 8, min = 8)
     private String documento;
 }

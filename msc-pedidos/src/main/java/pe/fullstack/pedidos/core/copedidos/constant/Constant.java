@@ -5,7 +5,8 @@ public final class Constant {
     private Constant(){
         throw new IllegalStateException("Constant class");
     }
-
+    
+    public static final Long EST_REG_PEDIDO = 1l;
     public static final String REG_INS_ACCEPTED = "EL PROCESO DE REGISTRO SE REALIZO DE MANERA SATISFACTORIA";
     public static final String REG_ACT_ACCEPTED = "EL PROCESO DE ACTUALIZACIÓN SE REALIZO DE MANERA SATISFACTORIA";
     public static final String REG_ACT_NOT_ACCEPTED = "EL PROCESO DE ACTUALIZACIÓN SE REALIZO DE MANERA SATISFACTORIA";

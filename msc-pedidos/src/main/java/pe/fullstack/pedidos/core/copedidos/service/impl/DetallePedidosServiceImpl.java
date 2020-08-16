@@ -1,21 +1,18 @@
 package pe.fullstack.pedidos.core.copedidos.service.impl;
 
-import pe.fullstack.pedidos.core.copedidos.domain.DetallePedidosEntity;
-import pe.fullstack.pedidos.core.copedidos.repository.DetallePedidosRepository;
-import pe.fullstack.pedidos.core.copedidos.model.DetallePedidosRequest;
-import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.DetallePedidosDTOToDetallePedidosEntityMapper;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.fullstack.pedidos.core.copedidos.service.DetallePedidosService;
-import pe.fullstack.pedidos.core.copedidos.exception.ModelNotFoundException;
-import pe.fullstack.pedidos.core.copedidos.constant.Constant;
-
 
 import lombok.extern.slf4j.Slf4j;
-import java.util.List;
-import java.util.Optional;
+import pe.fullstack.pedidos.core.copedidos.domain.DetallePedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.model.DetallePedidosRequest;
+import pe.fullstack.pedidos.core.copedidos.repository.DetallePedidosRepository;
+import pe.fullstack.pedidos.core.copedidos.service.DetallePedidosService;
+import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.DetallePedidosDTOToDetallePedidosEntityMapper;
 
 @Slf4j
 @Service
@@ -59,17 +56,17 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
 
     public DetallePedidosEntity updateDetallePedidos(DetallePedidosRequest detallePedidosRequest, Long id) {
 
+    	return null;
 
-
-        return detallePedidosRepository.findById(id).map(detallePedidosRequestObje -> {
-            detallePedidosRequest.setDetallePedidoId(id);
-            DetallePedidosEntity detallePedidos = detallePedidosRepository.save(detallePedidosDTOToDetallePedidosEntityMapper.detallePedidosDTOToDetallePedidosEntityMapper(detallePedidosRequest));
-            log.info("UPDATE DetallePedidos MESSAGE TEST" );
-            
-        return detallePedidos;
-
-        })
-        .orElseThrow(() -> new ModelNotFoundException(Constant.PERSONA_NOT_FOUND));
+//        return detallePedidosRepository.findById(id).map(detallePedidosRequestObje -> {
+//            detallePedidosRequest.setDetallePedidoId(id);
+//            DetallePedidosEntity detallePedidos = detallePedidosRepository.save(detallePedidosDTOToDetallePedidosEntityMapper.detallePedidosDTOToDetallePedidosEntityMapper(detallePedidosRequest));
+//            log.info("UPDATE DetallePedidos MESSAGE TEST" );
+//            
+//        return detallePedidos;
+//
+//        })
+//        .orElseThrow(() -> new ModelNotFoundException(Constant.PERSONA_NOT_FOUND));
     }
 
     public void deleteDetallePedidosById(Long id) {

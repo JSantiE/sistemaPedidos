@@ -1,21 +1,20 @@
 package pe.fullstack.pedidos.core.copedidos.service.impl;
 
-import pe.fullstack.pedidos.core.copedidos.domain.HistorialpedidosEntity;
-import pe.fullstack.pedidos.core.copedidos.repository.HistorialpedidosRepository;
-import pe.fullstack.pedidos.core.copedidos.model.HistorialpedidosRequest;
-import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.HistorialpedidosDTOToHistorialpedidosEntityMapper;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.fullstack.pedidos.core.copedidos.service.HistorialpedidosService;
-import pe.fullstack.pedidos.core.copedidos.exception.ModelNotFoundException;
-import pe.fullstack.pedidos.core.copedidos.constant.Constant;
-
 
 import lombok.extern.slf4j.Slf4j;
-import java.util.List;
-import java.util.Optional;
+import pe.fullstack.pedidos.core.copedidos.domain.EstadosEntity;
+import pe.fullstack.pedidos.core.copedidos.domain.HistorialpedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.domain.PedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.model.HistorialpedidosRequest;
+import pe.fullstack.pedidos.core.copedidos.repository.HistorialpedidosRepository;
+import pe.fullstack.pedidos.core.copedidos.repository.PedidosRepository;
+import pe.fullstack.pedidos.core.copedidos.service.HistorialpedidosService;
 
 @Slf4j
 @Service
@@ -23,12 +22,12 @@ import java.util.Optional;
 public class HistorialpedidosServiceImpl implements HistorialpedidosService {
 
     private final HistorialpedidosRepository historialpedidosRepository;
-    private HistorialpedidosDTOToHistorialpedidosEntityMapper historialpedidosDTOToHistorialpedidosEntityMapper = new HistorialpedidosDTOToHistorialpedidosEntityMapper();
-
-
+    private final PedidosRepository pedidosRepository;
     @Autowired
-    public HistorialpedidosServiceImpl(HistorialpedidosRepository historialpedidosRepository) {
+    public HistorialpedidosServiceImpl(HistorialpedidosRepository historialpedidosRepository,
+    		PedidosRepository pedidosRepository) {
         this.historialpedidosRepository = historialpedidosRepository;
+        this.pedidosRepository = pedidosRepository;
     }
 
     public List<HistorialpedidosEntity> findAllHistorialpedidoss() {
@@ -39,44 +38,39 @@ public class HistorialpedidosServiceImpl implements HistorialpedidosService {
         return listHistorialpedidos;
     }
 
-    public Optional<HistorialpedidosEntity> findHistorialpedidosById(Long id) {
-
-        Optional<HistorialpedidosEntity> optionalHistorialpedidos = historialpedidosRepository.findById(id);
-
-        log.info("GET Historialpedidos/ MESSAGE TEST" );
-        
-        return optionalHistorialpedidos;
-    }
 
     public HistorialpedidosEntity saveHistorialpedidos(HistorialpedidosRequest historialpedidosRequest) {
 
-        HistorialpedidosEntity historialpedidosEntity = historialpedidosRepository.save(historialpedidosDTOToHistorialpedidosEntityMapper.historialpedidosDTOToHistorialpedidosEntityMapper(historialpedidosRequest));
+        HistorialpedidosEntity historialpedidosEntity = new HistorialpedidosEntity();
 
+        if(pedidosRepository.findById(historialpedidosRequest.getPedidoId()).isPresent()) {
+        	PedidosEntity pedidoEntity = pedidosRepository.findById(historialpedidosRequest.getPedidoId()).get(); 
+        	EstadosEntity estado = null;
+			try {
+				estado = pedidoEntity.getEstado().clone();
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	estado.setEstadoId(estado.getEstadoId() + 1L);
+        	pedidoEntity.setEstado(estado);
+        	pedidosRepository.save(pedidoEntity);
+        	historialpedidosEntity.setFecha(new Date());
+        	historialpedidosEntity.setPedido(pedidoEntity);
+        	historialpedidosEntity.setEstado(estado);
+        }else {
+        	 return historialpedidosEntity;
+        }
+       
+        
+ 
+        historialpedidosRepository.save(historialpedidosEntity);
+        
+        
         log.info("POST Historialpedidos MESSAGE TEST" );
         
         return historialpedidosEntity;
     }
 
-    public HistorialpedidosEntity updateHistorialpedidos(HistorialpedidosRequest historialpedidosRequest, Long id) {
 
-
-
-        return historialpedidosRepository.findById(id).map(historialpedidosRequestObje -> {
-            historialpedidosRequest.setHistorialPedidoId(id);
-            HistorialpedidosEntity historialpedidos = historialpedidosRepository.save(historialpedidosDTOToHistorialpedidosEntityMapper.historialpedidosDTOToHistorialpedidosEntityMapper(historialpedidosRequest));
-            log.info("UPDATE Historialpedidos MESSAGE TEST" );
-            
-        return historialpedidos;
-
-        })
-        .orElseThrow(() -> new ModelNotFoundException(Constant.PERSONA_NOT_FOUND));
-    }
-
-    public void deleteHistorialpedidosById(Long id) {
-
-        historialpedidosRepository.findById(id).ifPresent(delete -> historialpedidosRepository.deleteById(id));
-
-        log.info("DELETE Historialpedidos/ MESSAGE TEST" );
-        
-    }
 }

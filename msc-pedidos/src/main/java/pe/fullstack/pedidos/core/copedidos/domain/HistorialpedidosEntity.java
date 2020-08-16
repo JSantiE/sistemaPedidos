@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -32,11 +33,14 @@ public class HistorialpedidosEntity {
     @GeneratedValue(generator = "historialpedidos_id_generator")
     private Long historialPedidoId;
 
+    @JsonIgnore
     @JoinColumn(name = "pedidoId", referencedColumnName = "pedidoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidosEntity pedido;
     
     private Date fecha;
     
-    private String estado;
+    @JoinColumn(name = "estadoId", referencedColumnName = "estadoId")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private EstadosEntity estado;
 }

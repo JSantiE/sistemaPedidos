@@ -1,10 +1,11 @@
 package pe.fullstack.pedidos.core.copedidos.service;
 
-import pe.fullstack.pedidos.core.copedidos.domain.PedidosEntity;
-import pe.fullstack.pedidos.core.copedidos.model.PedidosRequest;
-
 import java.util.List;
 import java.util.Optional;
+
+import pe.fullstack.pedidos.core.copedidos.domain.HistorialpedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.domain.PedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.model.PedidosRequest;
 
 public interface PedidosService {
 
@@ -17,4 +18,6 @@ public interface PedidosService {
     public PedidosEntity updatePedidos(PedidosRequest pedidosRequest, Long id);
 
     public void deletePedidosById(Long id);
+
+	public List<HistorialpedidosEntity> searchHistorialPedidosById(Long id);
 }

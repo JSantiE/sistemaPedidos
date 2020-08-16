@@ -1,21 +1,18 @@
 package pe.fullstack.pedidos.core.copedidos.service.impl;
 
-import pe.fullstack.pedidos.core.copedidos.domain.ClientesEntity;
-import pe.fullstack.pedidos.core.copedidos.repository.ClientesRepository;
-import pe.fullstack.pedidos.core.copedidos.model.ClientesRequest;
-import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.ClientesDTOToClientesEntityMapper;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.fullstack.pedidos.core.copedidos.service.ClientesService;
-import pe.fullstack.pedidos.core.copedidos.exception.ModelNotFoundException;
-import pe.fullstack.pedidos.core.copedidos.constant.Constant;
-
 
 import lombok.extern.slf4j.Slf4j;
-import java.util.List;
-import java.util.Optional;
+import pe.fullstack.pedidos.core.copedidos.domain.ClientesEntity;
+import pe.fullstack.pedidos.core.copedidos.model.ClientesRequest;
+import pe.fullstack.pedidos.core.copedidos.repository.ClientesRepository;
+import pe.fullstack.pedidos.core.copedidos.service.ClientesService;
+import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.ClientesDTOToClientesEntityMapper;
 
 @Slf4j
 @Service
@@ -59,17 +56,7 @@ public class ClientesServiceImpl implements ClientesService {
 
     public ClientesEntity updateClientes(ClientesRequest clientesRequest, Long id) {
 
-
-
-        return clientesRepository.findById(id).map(clientesRequestObje -> {
-            clientesRequest.setClienteId(id);
-            ClientesEntity clientes = clientesRepository.save(clientesDTOToClientesEntityMapper.clientesDTOToClientesEntityMapper(clientesRequest));
-            log.info("UPDATE Clientes MESSAGE TEST" );
-            
-        return clientes;
-
-        })
-        .orElseThrow(() -> new ModelNotFoundException(Constant.PERSONA_NOT_FOUND));
+    	return null;
     }
 
     public void deleteClientesById(Long id) {

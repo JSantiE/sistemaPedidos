@@ -13,6 +13,5 @@ public class CategoriasRequest {
 	
 	private Long categoriaId;
 
-//	@NotEmpty
     private String nombre;
 }

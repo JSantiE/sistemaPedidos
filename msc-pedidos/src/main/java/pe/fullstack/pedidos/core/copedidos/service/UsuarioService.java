@@ -1,0 +1,22 @@
+package pe.fullstack.pedidos.core.copedidos.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import pe.fullstack.pedidos.core.copedidos.domain.UsuarioEntity;
+import pe.fullstack.pedidos.core.copedidos.model.UsuarioRequest;
+
+public interface UsuarioService {
+
+    public List<UsuarioEntity> findAllusuarios();
+
+    public Optional<UsuarioEntity> findusuarioById(Long id);
+
+    public UsuarioEntity saveusuario(UsuarioRequest UsuarioRequest);
+
+    public UsuarioEntity updateusuario(UsuarioRequest UsuarioRequest, Long id);
+
+    public void deleteusuarioById(Long id);
+
+	public UsuarioEntity login(String username, String password);
+}

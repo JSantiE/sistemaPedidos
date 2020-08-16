@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class DetallePedidosEntity {
     @GeneratedValue(generator = "detallePedidos_id_generator")
     private Long detallePedidoId;
     
+    @JsonIgnore
     @JoinColumn(name = "pedidoId", referencedColumnName = "pedidoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidosEntity pedido;

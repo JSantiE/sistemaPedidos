@@ -1,5 +1,7 @@
 package pe.fullstack.pedidos.core.copedidos.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,4 +40,6 @@ public class PedidosEntity {
     @JoinColumn(name = "estadoId", referencedColumnName = "estadoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadosEntity estado;
+    
+    private Date fechaEntrega;
 }
