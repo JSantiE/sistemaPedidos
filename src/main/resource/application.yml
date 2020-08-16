@@ -10,7 +10,7 @@ spring:
       ddl-auto: update  
   datasource:
     platform: postgress
-    url: ${DATABASE_URL}
+    url: ${URL_HOST}
     username: ${USER}
     password: ${PASSWORD}
   
