@@ -31,4 +31,5 @@ public class UsuarioRequest {
     private String email;
     private String birthDate;
     private String facebook;
+    private int tipoUsuario;
 }
