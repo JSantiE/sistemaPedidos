@@ -1,5 +1,6 @@
 package pe.fullstack.pedidos.core.copedidos.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -136,5 +137,24 @@ public class PedidosServiceImpl implements PedidosService {
 		
 		Optional<PedidosEntity>  pedidoOptional = this.findPedidosById(id);
 		return detallePedidosRepository.findByPedido(pedidoOptional.get());
+	}
+
+	@Override
+	public List<PedidosEntity> findAllPedidos(Long tipoUsuario) {
+		List<PedidosEntity> pedidosFilter = new ArrayList<>();
+		List<PedidosEntity> pedidos = pedidosRepository.findAll();
+		for (PedidosEntity pedidosEntity : pedidos) {
+			if (tipoUsuario == 1) {
+				if (pedidosEntity.getEstado().getEstadoId() !=  4 ) {
+					pedidosFilter.add(pedidosEntity);
+				}
+			}else {
+				if (pedidosEntity.getEstado().getEstadoId() ==  4  || pedidosEntity.getEstado().getEstadoId() ==  5) {
+					pedidosFilter.add(pedidosEntity);
+				}
+			}
+		}
+		
+		return pedidosFilter;
 	}
 }

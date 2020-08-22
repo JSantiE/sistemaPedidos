@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -38,9 +39,9 @@ public class PedidosController {
         this.pedidosService = pedidosService;
     }
 
-    @GetMapping
-    public List<PedidosEntity> getAllPedidoss() {
-        return pedidosService.findAllPedidoss();
+    @GetMapping("tipo-usuario/{id}")
+    public List<PedidosEntity> getAllPedidos(@PathVariable Long id) {
+        return pedidosService.findAllPedidos(id);
     }
 
     @ApiOperation(value = "Obtiene Pedidos por ID", tags = { "Controlador Pedidos" })

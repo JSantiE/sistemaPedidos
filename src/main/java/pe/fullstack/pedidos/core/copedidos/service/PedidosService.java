@@ -23,4 +23,6 @@ public interface PedidosService {
 	public List<HistorialpedidosEntity> searchHistorialPedidosById(Long id);
 
 	public List<DetallePedidosEntity> searchDetallePedidosById(Long id);
+
+	public List<PedidosEntity> findAllPedidos(Long id);
 }
