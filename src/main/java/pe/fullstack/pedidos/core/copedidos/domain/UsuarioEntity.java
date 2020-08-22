@@ -1,5 +1,6 @@
 package pe.fullstack.pedidos.core.copedidos.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,5 +34,7 @@ public class UsuarioEntity {
     private String email;
     private String birthDate;
     private String facebook;
+    
+    @Column(nullable = true)
     private int tipoUsuario;
 }
