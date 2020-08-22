@@ -33,4 +33,5 @@ public class UsuarioEntity {
     private String email;
     private String birthDate;
     private String facebook;
+    private int tipoUsuario;
 }
