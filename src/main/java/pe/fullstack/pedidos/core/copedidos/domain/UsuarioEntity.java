@@ -36,5 +36,5 @@ public class UsuarioEntity {
     private String facebook;
     
     @Column(nullable = true)
-    private int tipoUsuario;
+    private Integer tipoUsuario;
 }
