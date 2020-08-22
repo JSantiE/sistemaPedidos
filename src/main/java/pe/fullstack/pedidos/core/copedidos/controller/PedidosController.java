@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import pe.fullstack.pedidos.core.copedidos.constant.Constant;
+import pe.fullstack.pedidos.core.copedidos.domain.DetallePedidosEntity;
 import pe.fullstack.pedidos.core.copedidos.domain.HistorialpedidosEntity;
 import pe.fullstack.pedidos.core.copedidos.domain.PedidosEntity;
 import pe.fullstack.pedidos.core.copedidos.exception.ExceptionResponse;
@@ -54,6 +55,15 @@ public class PedidosController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @ApiOperation(value = "Obtiene Pedidos por ID", tags = { "Controlador Pedidos" })
+    @GetMapping("/{id}/detalle-pedidos")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Pedidos encontrada", response = PedidosEntity.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Error en el servidor", response = ExceptionResponse.class)})
+    public List<DetallePedidosEntity> getDetallelById(@PathVariable Long id) {
+        return pedidosService.searchDetallePedidosById(id);
+    }
     
     @ApiOperation(value = "Obtiene Pedidos por ID", tags = { "Controlador Pedidos" })
     @GetMapping("/{id}/historial-pedidos")

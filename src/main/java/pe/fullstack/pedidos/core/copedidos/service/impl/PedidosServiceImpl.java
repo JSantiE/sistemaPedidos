@@ -130,4 +130,11 @@ public class PedidosServiceImpl implements PedidosService {
 
 		return historialpedidosRepository.findByPedido(pedidosRepository.findById(id).get());
 	}
+
+	@Override
+	public List<DetallePedidosEntity> searchDetallePedidosById(Long id) {
+		
+		Optional<PedidosEntity>  pedidoOptional = this.findPedidosById(id);
+		return detallePedidosRepository.findByPedido(pedidoOptional.get());
+	}
 }
