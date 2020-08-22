@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ProductosEntity {
+public class ProductosEntity  implements Cloneable{
 
     @Id
     @SequenceGenerator(name = "productos_id_generator", sequenceName = "productos_id_seq", allocationSize = 1)
@@ -42,4 +42,10 @@ public class ProductosEntity {
     
     private int stock;
     
+    @Override
+    public ProductosEntity clone() throws CloneNotSupportedException {
+    
+    	ProductosEntity nueva= new ProductosEntity (this.productoId,this.categoria,this.precio, this.nombre,this.descripcion,this.stock);
+        return nueva;
+    }
 }

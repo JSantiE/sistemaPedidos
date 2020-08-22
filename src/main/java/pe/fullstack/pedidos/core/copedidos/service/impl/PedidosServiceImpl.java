@@ -16,16 +16,19 @@ import pe.fullstack.pedidos.core.copedidos.domain.DetallePedidosEntity;
 import pe.fullstack.pedidos.core.copedidos.domain.EstadosEntity;
 import pe.fullstack.pedidos.core.copedidos.domain.HistorialpedidosEntity;
 import pe.fullstack.pedidos.core.copedidos.domain.PedidosEntity;
+import pe.fullstack.pedidos.core.copedidos.domain.ProductosEntity;
 import pe.fullstack.pedidos.core.copedidos.model.DetallePedidosRequest;
 import pe.fullstack.pedidos.core.copedidos.model.PedidosRequest;
 import pe.fullstack.pedidos.core.copedidos.repository.ClientesRepository;
 import pe.fullstack.pedidos.core.copedidos.repository.DetallePedidosRepository;
 import pe.fullstack.pedidos.core.copedidos.repository.HistorialpedidosRepository;
 import pe.fullstack.pedidos.core.copedidos.repository.PedidosRepository;
+import pe.fullstack.pedidos.core.copedidos.repository.ProductosRepository;
 import pe.fullstack.pedidos.core.copedidos.service.PedidosService;
 import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.ClientesDTOToClientesEntityMapper;
 import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.DetallePedidosDTOToDetallePedidosEntityMapper;
 import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.PedidosDTOToPedidosEntityMapper;
+import pe.fullstack.pedidos.core.copedidos.service.impl.mapper.ProductosDTOToProductosEntityMapper;
 
 @Slf4j
 @Service
@@ -36,7 +39,9 @@ public class PedidosServiceImpl implements PedidosService {
     private final ClientesRepository clientesRepository;
     private final DetallePedidosRepository detallePedidosRepository;
     private final HistorialpedidosRepository historialpedidosRepository;
+    private final ProductosRepository productosRepository;
     
+    private ProductosDTOToProductosEntityMapper productosDTOToProductosEntityMapper = new ProductosDTOToProductosEntityMapper();
     private ClientesDTOToClientesEntityMapper clientesDTOToClientesEntityMapper = new ClientesDTOToClientesEntityMapper();
     private PedidosDTOToPedidosEntityMapper pedidosDTOToPedidosEntityMapper = new PedidosDTOToPedidosEntityMapper();
     private DetallePedidosDTOToDetallePedidosEntityMapper detallePedidosDTOToDetallePedidosEntityMapper = new DetallePedidosDTOToDetallePedidosEntityMapper();
@@ -45,11 +50,13 @@ public class PedidosServiceImpl implements PedidosService {
     public PedidosServiceImpl(PedidosRepository pedidosRepository,
     		ClientesRepository clientesRepository,
     		DetallePedidosRepository detallePedidosRepository,
-    		HistorialpedidosRepository historialpedidosRepository) {
+    		HistorialpedidosRepository historialpedidosRepository,
+    		ProductosRepository productosRepository) {
         this.pedidosRepository = pedidosRepository;
         this.clientesRepository = clientesRepository;
         this.detallePedidosRepository = detallePedidosRepository;
         this.historialpedidosRepository = historialpedidosRepository;
+        this.productosRepository = productosRepository;
     }
 
     public List<PedidosEntity> findAllPedidoss() {
@@ -94,6 +101,18 @@ public class PedidosServiceImpl implements PedidosService {
     		DetallePedidosEntity detPedidoEntity = detallePedidosDTOToDetallePedidosEntityMapper.detallePedidosDTOToDetallePedidosEntityMapper(detPedidoRequest);
     		detPedidoEntity.setPedido(pedidosEntity);
     		detallePedidosRepository.save(detPedidoEntity);
+    		
+    		
+    		Optional<ProductosEntity> producto =  productosRepository.findById(detPedidoEntity.getProducto().getProductoId());
+    		if (producto.isPresent()) {
+    			try {
+					ProductosEntity product = producto.get().clone();
+					product.setStock(product.getStock() - detPedidoRequest.getCantidad().intValue() );
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
         
     	
@@ -145,11 +164,11 @@ public class PedidosServiceImpl implements PedidosService {
 		List<PedidosEntity> pedidos = pedidosRepository.findAll();
 		for (PedidosEntity pedidosEntity : pedidos) {
 			if (tipoUsuario == 1) {
-				if (pedidosEntity.getEstado().getEstadoId() !=  4 ) {
+				if (pedidosEntity.getEstado().getEstadoId() !=  3 || pedidosEntity.getEstado().getEstadoId() !=  4  ) {
 					pedidosFilter.add(pedidosEntity);
 				}
 			}else {
-				if (pedidosEntity.getEstado().getEstadoId() ==  4  || pedidosEntity.getEstado().getEstadoId() ==  5) {
+				if (pedidosEntity.getEstado().getEstadoId() ==  3  || pedidosEntity.getEstado().getEstadoId() ==  4) {
 					pedidosFilter.add(pedidosEntity);
 				}
 			}
