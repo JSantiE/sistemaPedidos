@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiResponses;
 import pe.fullstack.pedidos.core.copedidos.constant.Constant;
 import pe.fullstack.pedidos.core.copedidos.domain.UsuarioEntity;
 import pe.fullstack.pedidos.core.copedidos.exception.ExceptionResponse;
+import pe.fullstack.pedidos.core.copedidos.model.UsuarioLogin;
 import pe.fullstack.pedidos.core.copedidos.model.UsuarioRequest;
 import pe.fullstack.pedidos.core.copedidos.model.UsuarioResponse;
 import pe.fullstack.pedidos.core.copedidos.service.UsuarioService;
@@ -72,9 +73,8 @@ public class UsuarioController {
             @ApiResponse(code = 201, message = "usuario registrada", response = UsuarioRequest.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Error en el servidor", response = ExceptionResponse.class)})
-    public ResponseEntity<UsuarioEntity> login(@RequestParam String username, @RequestParam String password) {
-        ;
-        return new ResponseEntity<>(usuarioService.login(username,password), HttpStatus.OK);
+    public ResponseEntity<UsuarioEntity> login(@RequestBody UsuarioLogin usuario) {
+        return new ResponseEntity<>(usuarioService.login(usuario.getUsername(),usuario.getPassword()), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Actualiza usuario", tags = { "Controlador usuario" })
